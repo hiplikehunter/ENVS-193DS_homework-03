@@ -1,0 +1,21 @@
+---
+title: "homework3"
+format: html
+---
+
+https://github.com/hiplikehunter/ENVS-193DS_homework-03
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(here)
+library(flextable)
+library(readxl)
+library(png)
+library(grid)
+#loading data
+my_data <- read_excel(here("data/personaldata.xlsx"))
+```
+
+a. Data Summarizing
+
