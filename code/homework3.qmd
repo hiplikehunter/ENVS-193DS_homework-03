@@ -5,6 +5,8 @@ format: html
 
 https://github.com/hiplikehunter/ENVS-193DS_homework-03
 
+## Set Up
+
 ```{r}
 library(tidyverse)
 library(janitor)
@@ -13,6 +15,8 @@ library(flextable)
 library(readxl)
 library(png)
 library(grid)
+library(dplyr)
+library(gt)
 #loading data
 personaldata <- read_excel(here("data/personaldata.xlsx"))
 ```
@@ -29,36 +33,64 @@ b. Visualization
 
 ggplot(data = personaldata,
        aes(x= WindSpeeds,
-           y= Pace)) +
+           y= Pace,
+           color = WeatherType)) +
   geom_point() +
   labs(x = "Wind Speed (mph)",
        y = "Pace (mph)")
 
 ggplot(data = personaldata,
        aes(x = WeatherType,
-           y = Pace)) +
+           y = Pace,
+           color = WeatherType)) +
   geom_boxplot() +
   geom_jitter(height = 0,
               width = 0.05) +
   scale_color_manual(labels = c("Overcast", "Sunny"),
-                     values = c("yellow4", "#38f246")) +
+                     values = c("yellow3", "#38f246")) +
   theme(panel.background = element_blank()) +
       theme(panel.grid.major = element_line(color = "#000000")) +
-    theme(panel.grid = element_line(size = .1))
+    theme(panel.grid = element_line(size = .1)) +
+  labs(x = "Weather Condition",
+       y = "Pace (mph)") +
+  labs(color = "Weather Condition")
+
 
 ```
 
 c. Caption
 
+Relationship between Weather Condition (Overcast & Sunny) and biking pace (mph).
 
 d. Table Presentation
 
+```{r}
+summary_table <- personaldata |> 
+  group_by(WeatherType) |> 
+  summarise(
+    Count = n(),
+    Mean_Pace = round(mean(Pace, na.rm = TRUE), 2),
+    SD_Pace = round(sd(Pace, na.rm = TRUE), 2))
+
+
+summary_table |> 
+  gt() |> 
+  tab_header(title = "Biking Pace by Weather Type") |> 
+  cols_label(WeatherType = "Weather",
+    Count = "Number of Rides",
+    Mean_Pace = "Mean Pace (mph)",
+    SD_Pace = "SD Pace (mph)") |> 
+  fmt_number(columns = c(Mean_Pace, SD_Pace),
+    decimals = 1)
+
+```
 
 
 ## Problem 2
 
 a. Describe in words what an affective visualization could look like for your personal data
 
+My data is represented by two weather conditions, cloudy and sunny, and how that relationship affects with my biking pace. My affective visualization could be represented by a drawing of a bike, with the two wheels assigned to each indicator variable. Around the tires, other information such as a title and legend could fit within or on top of the bike frame. The summary data can be represented within the tires with colors or perhaps size of spokes.
 
 b. Create a sketch (on paper) of your idea
 
