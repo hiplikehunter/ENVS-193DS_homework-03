@@ -14,8 +14,85 @@ library(readxl)
 library(png)
 library(grid)
 #loading data
-my_data <- read_excel(here("data/personaldata.xlsx"))
+personaldata <- read_excel(here("data/personaldata.xlsx"))
 ```
 
-a. Data Summarizing
+## Problem 1
+
+a. Data summarizing
+
+I could compare and see if wind speeds or temperature is correlated with my biking pace. I imagine that windy or hot conditions could slow down my pace and effort. Categorically, I could group data by weekdays versus weekends and sunny versus cloudy weather and see if that affects my biking pace as well.
+
+b. Visualization
+
+```{r}
+
+ggplot(data = personaldata,
+       aes(x= WindSpeeds,
+           y= Pace)) +
+  geom_point() +
+  labs(x = "Wind Speed (mph)",
+       y = "Pace (mph)")
+
+ggplot(data = personaldata,
+       aes(x = WeatherType,
+           y = Pace)) +
+  geom_boxplot() +
+  geom_jitter(height = 0,
+              width = 0.05) +
+  scale_color_manual(labels = c("Overcast", "Sunny"),
+                     values = c("yellow4", "#38f246")) +
+  theme(panel.background = element_blank()) +
+      theme(panel.grid.major = element_line(color = "#000000")) +
+    theme(panel.grid = element_line(size = .1))
+
+```
+
+c. Caption
+
+
+d. Table Presentation
+
+
+
+## Problem 2
+
+a. Describe in words what an affective visualization could look like for your personal data
+
+
+b. Create a sketch (on paper) of your idea
+
+
+c. Make a draft of your visualization
+
+
+d. Write an artist statement
+
+
+
+
+## Problem 3
+
+a. Revisit and summarize
+
+The paper is investigating the effects of the introduced mosquitofish on populations of stream breeding frogs and tadpoles. This paper includes an ANOVA test. The response variable is mean percent survival of mosquito larvae. The predictor variable is the type of experiment, whether in the lab or field and whether there is high or low density of mosquito larvae.
+
+```{r}
+grid.raster(readPNG(here("statisticalcritiqueplot.png")))
+```
+
+
+b. Visual clarity
+
+The figure shows general trends of the data and includes error bars for the data. The axes are in logical positions with the three separate graphs stacked on top of each other.
+
+
+c. Aesthetic clarity
+
+Many lines of data points overlap each other and makes it hard to clearly distingish from the different groups of data. Also the font sizes within the figure are much smaller than that of the figure font.
+
+
+d. Recommendations
+
+I would include different colors for the different groups of data to further distinguish them along with the different shapes. I would also include the different treatments associated with the three graphs within the figure, rather than just listing them within the caption. I would stretch the figure vertically as well, since the data points and lines are smushed on top of each other. I would also change the symbols associated with each group of data. For example, I would have the mosquito larvae data have the same shape, but have them either colored in or not based on the presence of tadpoles or not. Similarly, I would do the same for Hyla regilla so that the data is groups logically due to species and treatment.
 
