@@ -1,6 +1,8 @@
 ---
 title: "homework3"
 format: html
+name: Hunter Steinle
+date: June 1, 2025
 ---
 
 https://github.com/hiplikehunter/ENVS-193DS_homework-03
@@ -31,29 +33,21 @@ b. Visualization
 
 ```{r}
 
-ggplot(data = personaldata,
-       aes(x= WindSpeeds,
-           y= Pace,
-           color = WeatherType)) +
-  geom_point() +
-  labs(x = "Wind Speed (mph)",
-       y = "Pace (mph)")
-
-ggplot(data = personaldata,
-       aes(x = WeatherType,
-           y = Pace,
-           color = WeatherType)) +
-  geom_boxplot() +
-  geom_jitter(height = 0,
-              width = 0.05) +
-  scale_color_manual(labels = c("Overcast", "Sunny"),
-                     values = c("yellow3", "#38f246")) +
-  theme(panel.background = element_blank()) +
-      theme(panel.grid.major = element_line(color = "#000000")) +
-    theme(panel.grid = element_line(size = .1)) +
-  labs(x = "Weather Condition",
-       y = "Pace (mph)") +
-  labs(color = "Weather Condition")
+ggplot(data = personaldata, #gg plot using my personal data
+       aes(x = WeatherType, #weather as indicator variable
+           y = Pace, # biking pace as response variable
+           color = WeatherType)) + # use this to assign groups with colors
+  geom_boxplot() + # creates a boxplot for data
+  geom_jitter(height = 0, # overlays data points in jitter plot, no jitter up or down
+              width = 0.05) + # a little jitter side to side
+  scale_color_manual(labels = c("Overcast", "Sunny"), # find which groups to assign colors
+                     values = c("yellow3", "#38f246")) + # find which colors to use
+  theme(panel.background = element_blank()) + # takes out gray background
+      theme(panel.grid.major = element_line(color = "#000000")) + # puts in some lines 
+    theme(panel.grid = element_line(size = .1)) + # changes size of lines
+  labs(x = "Weather Condition", # creates labels for x axis
+       y = "Pace (mph)") + # creates label for y axis
+  labs(color = "Weather Condition") # Title of legend
 
 
 ```
@@ -65,23 +59,22 @@ Relationship between Weather Condition (Overcast & Sunny) and biking pace (mph).
 d. Table Presentation
 
 ```{r}
-summary_table <- personaldata |> 
-  group_by(WeatherType) |> 
-  summarise(
-    Count = n(),
-    Mean_Pace = round(mean(Pace, na.rm = TRUE), 2),
-    SD_Pace = round(sd(Pace, na.rm = TRUE), 2))
+summary_table <- personaldata |> # creates new object new summarize data
+  group_by(WeatherType) |> # Groups data by weather type
+  summarise(Count = n(), # creates a column for count
+    Mean_Pace = round(mean(Pace, na.rm = TRUE), 2), # calculates the means for the groups
+    SD_Pace = round(sd(Pace, na.rm = TRUE), 2)) # calculates the sd for the gorups
 
 
-summary_table |> 
-  gt() |> 
-  tab_header(title = "Biking Pace by Weather Type") |> 
-  cols_label(WeatherType = "Weather",
-    Count = "Number of Rides",
-    Mean_Pace = "Mean Pace (mph)",
-    SD_Pace = "SD Pace (mph)") |> 
-  fmt_number(columns = c(Mean_Pace, SD_Pace),
-    decimals = 1)
+summary_table |> # uses summary data just calcualted
+  gt() |> # creates data table
+  tab_header(title = "Biking Pace by Weather Type") |> # creates title
+  cols_label(WeatherType = "Weather", # column name for weather type/ indicator variable
+    Count = "Number of Rides", # column name for number of rides
+    Mean_Pace = "Mean Pace (mph)", # column name for mean pace
+    SD_Pace = "SD Pace (mph)") |>  # column name for st dev
+  fmt_number(columns = c(Mean_Pace, SD_Pace), # formats the columns for the mean and sd
+    decimals = 1) # limits number of decimals to 1
 
 ```
 
@@ -94,13 +87,20 @@ My data is represented by two weather conditions, cloudy and sunny, and how that
 
 b. Create a sketch (on paper) of your idea
 
+```{r}
+grid.raster(readPNG(here("affective_visualization_draft.png")))
+```
+
 
 c. Make a draft of your visualization
 
+```{r}
+grid.raster(readPNG(here("affective_visualization_draft.png")))
+```
 
 d. Write an artist statement
 
-
+My affective visualization depicts my biking pace in accordance to weather type. The two wheels on the drawn bike represent the two weather types I recorded, and different length of spokes signal the different biking paces I recorded. I think for my final image, I will take a picture of my actual bike and superimpose my data driven representation on top of the wheels. I was inspired by a classmate who represented their data in circles and colors and connected the idea of using circles to the circular shape of my bike tires.
 
 
 ## Problem 3
